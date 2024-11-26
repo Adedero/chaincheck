@@ -6,14 +6,14 @@ import {
 } from '../../types/types';
 import { handleTypeMismatch } from '../../utils/helpers';
 
-export const hasLength = <T>(
+export const maxLength = <T>(
   value: any,
   type: ValueType,
   input: number,
   options?: ValidationOptions,
 ): ValidationRuleResult<T> => {
   const data = {
-    rule: 'hasLength',
+    rule: 'maxLength',
     expected: ['string', 'array', 'number', 'object'] as ValueType[],
     received: type,
   };
@@ -51,9 +51,9 @@ export const hasLength = <T>(
       message: message ?? 'Value must be a string, number, array, or object',
     };
 
-  const isValid = length === input;
+  const isValid = length <= input;
   const defaultMessage =
-    message ?? (isValid ? '' : `Value must have length equal to ${input}`);
+    message ?? (isValid ? '' : `Value must have a maximum length of ${input}`);
 
   return {
     value,

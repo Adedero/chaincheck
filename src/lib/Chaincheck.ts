@@ -33,18 +33,30 @@ export class Chaincheck<T> {
     return result;
   }
 
-  //Common rules
-  hasLength(input: number, options?: ValidationOptions): this {
-    this.rules.push((value) => 
-      validations.hasLength(value, getValueType(value), input, options)
-    )
+  private addRule(validationFunc: Function, ...args: any[]): this {
+    this.rules.push((value) => validationFunc(value, getValueType(value), ...args));
     return this;
   }
 
-  isNotEmpty(options?: ValidationOptions) : this {
-    this.rules.push((value) => 
-      validations.isNotEmpty(value, getValueType(value), options)
-    )
-    return this;
+  //Common rules
+   isEmpty(options?: ValidationOptions): this {
+    return this.addRule(validations.isEmpty, options);
   }
+
+  isNotEmpty(options?: ValidationOptions): this {
+    return this.addRule(validations.isNotEmpty, options);
+  }
+
+  hasLength(input: number, options?: ValidationOptions): this {
+    return this.addRule(validations.hasLength, input, options);
+  }
+
+  minLength(input: number, options?: ValidationOptions): this {
+    return this.addRule(validations.minLength, input, options);
+  }
+
+  maxLength(input: number, options?: ValidationOptions): this {
+    return this.addRule(validations.maxLength, input, options);
+  }
+
 }

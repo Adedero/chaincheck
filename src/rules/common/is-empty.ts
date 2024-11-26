@@ -5,13 +5,13 @@ import {
 } from '../../types/types';
 import { handleTypeMismatch } from '../../utils/helpers';
 
-export const isNotEmpty = <T>(
+export const isEmpty = <T>(
   value: any,
   type: ValueType,
   options?: ValidationOptions,
 ): ValidationRuleResult<T> => {
   const data = {
-    rule: 'isNotEmpty',
+    rule: 'isEmpty',
     expected: ['string', 'array', 'object'] as ValueType[],
     received: type,
   };
@@ -22,13 +22,13 @@ export const isNotEmpty = <T>(
   if (error) return error;
 
   const isValid =
-    (type === 'string' && (value as string).trim().length > 0) ||
-    (type === 'array' && Array.isArray(value) && value.length > 0) ||
+    (type === 'string' && (value as string).trim().length === 0) ||
+    (type === 'array' && Array.isArray(value) && value.length === 0) ||
     (type === 'object' &&
       value !== null &&
-      Object.keys(value as object).length > 0);
+      Object.keys(value as object).length === 0);
 
-  message = message ?? 'Value must not be empty';
+  message = message ?? 'Value must be empty';
 
   return {
     value,

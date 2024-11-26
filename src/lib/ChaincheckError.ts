@@ -9,7 +9,7 @@ export default class ChaincheckError extends Error {
   constructor(
     message: string,
     data?: { rule: string; expected: ValueType[]; received: ValueType },
-    name?: ChaincheckErrorType
+    name?: ChaincheckErrorType,
   ) {
     super(message);
     this.name = name || 'ValidationError';

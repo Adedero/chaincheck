@@ -1,5 +1,5 @@
 import { Chaincheck } from '../dist/index.js';
 
-const result = new Chaincheck("mj").isNotEmpty().hasLength(1).validate();
+const result = new Chaincheck('suraya').minLength(9).validate();
 
 console.log(result);
