@@ -26,7 +26,7 @@ export const minLength = <T>(
     );
   }
 
-  let message = options?.message;
+  let message = options?.message ?? `Value must have a minimum length of ${input}`;
 
   const error = handleTypeMismatch(value, data, message);
   if (error) return error;
@@ -52,8 +52,7 @@ export const minLength = <T>(
     };
 
   const isValid = length >= input;
-  const defaultMessage =
-    message ?? (isValid ? '' : `Value must have a minimum length of ${input}`);
+  const defaultMessage = isValid ? '' : message;
 
   return {
     value,

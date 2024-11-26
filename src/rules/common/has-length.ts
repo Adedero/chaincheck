@@ -52,8 +52,7 @@ export const hasLength = <T>(
     };
 
   const isValid = length === input;
-  const defaultMessage =
-    message ?? (isValid ? '' : `Value must have length equal to ${input}`);
+  const defaultMessage = isValid ? '' : message ?? `Value must have length equal to ${input}`
 
   return {
     value,

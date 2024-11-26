@@ -34,12 +34,14 @@ export class Chaincheck<T> {
   }
 
   private addRule(validationFunc: Function, ...args: any[]): this {
-    this.rules.push((value) => validationFunc(value, getValueType(value), ...args));
+    this.rules.push((value) =>
+      validationFunc(value, getValueType(value), ...args),
+    );
     return this;
   }
 
   //Common rules
-   isEmpty(options?: ValidationOptions): this {
+  isEmpty(options?: ValidationOptions): this {
     return this.addRule(validations.isEmpty, options);
   }
 
@@ -59,4 +61,9 @@ export class Chaincheck<T> {
     return this.addRule(validations.maxLength, input, options);
   }
 
+
+  //String rules
+  isString(options?: ValidationOptions): this {
+    return this.addRule(validations.isString, options);
+  }
 }
