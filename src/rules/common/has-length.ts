@@ -18,6 +18,9 @@ export const hasLength = <T>(
     received: type,
   };
 
+  const error = handleTypeMismatch(data);
+  if (error) throw error;
+
   if (!input || typeof input !== 'number') {
     throw new ChaincheckError(
       'Input parameter is missing or invalid. Input should be a number',
@@ -27,9 +30,6 @@ export const hasLength = <T>(
   }
 
   let message = options?.message;
-
-  const error = handleTypeMismatch(value, data, message);
-  if (error) return error;
 
   let length: number | null = null;
 

@@ -16,10 +16,10 @@ export const isNotEmpty = <T>(
     received: type,
   };
 
-  let message = options?.message;
+  const error = handleTypeMismatch(data);
+  if (error) throw error;
 
-  const error = handleTypeMismatch(value, data, message);
-  if (error) return error;
+  let message = options?.message;
 
   const isValid =
     (type === 'string' && (value as string).trim().length > 0) ||

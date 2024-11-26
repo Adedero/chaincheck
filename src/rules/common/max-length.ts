@@ -17,6 +17,9 @@ export const maxLength = <T>(
     expected: ['string', 'array', 'number', 'object'] as ValueType[],
     received: type,
   };
+  
+  const error = handleTypeMismatch(data);
+  if (error) throw error;
 
   if (!input || typeof input !== 'number') {
     throw new ChaincheckError(
@@ -27,9 +30,6 @@ export const maxLength = <T>(
   }
 
   let message = options?.message ?? `Value must have a maximum length of ${input}`;
-
-  const error = handleTypeMismatch(value, data, message);
-  if (error) return error;
 
   let length: number | null = null;
 

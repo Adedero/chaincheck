@@ -46,18 +46,8 @@ export const validate = <T>(
           rule: result.rule,
           expected: result.expected,
           received: result.received,
-          message: '',
+          message: result.message ?? `Validation failed for rule: ${result.rule}`,
         };
-
-        if (!result.expected.includes(result.received)) {
-          error.message =
-            (result.message ?? result.expected.length > 1)
-              ? `Value must be one of ${result.expected.join(', ')}`
-              : `Value must be ${result.expected[0]}`;
-        } else {
-          error.message =
-            result.message ?? `Validation failed for rule: ${result.rule}`;
-        }
 
         errors.push(error);
 
@@ -85,7 +75,7 @@ export const validate = <T>(
         rule: error.rule,
         expected: error.expected ?? ['unknown'],
         received: error.received ?? 'unknown',
-        message: `Error: ${error.message ?? 'Validation failed'}`,
+        message: `Error: ${error.message}`,
       });
     }
   }

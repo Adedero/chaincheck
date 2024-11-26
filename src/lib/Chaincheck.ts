@@ -66,4 +66,13 @@ export class Chaincheck<T> {
   isString(options?: ValidationOptions): this {
     return this.addRule(validations.isString, options);
   }
+  isAlpha(options?: ValidationOptions): this {
+    return this.addRule(validations.isAlpha, options);
+  }
+  isNumeric(options?: ValidationOptions): this {
+    return this.addRule(validations.isNumeric, options);
+  }
+  isAlphaNum(options?: ValidationOptions): this {
+    return this.addRule(validations.isAlphaNum, options);
+  }
 }

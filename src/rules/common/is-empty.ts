@@ -18,8 +18,8 @@ export const isEmpty = <T>(
 
   let message = options?.message;
 
-  const error = handleTypeMismatch(value, data, message);
-  if (error) return error;
+  const error = handleTypeMismatch(data);
+  if (error) throw error;
 
   const isValid =
     (type === 'string' && (value as string).trim().length === 0) ||

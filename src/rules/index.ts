@@ -7,6 +7,9 @@ export { maxLength } from './common/max-length';
 
 //String
 export { isString } from './string/is-string';
+export { isAlpha } from './string/is-alpha';
+export { isNumeric } from './string/is-numeric';
+export { isAlphaNum } from './string/is-alpha-num';
 /* export { isEmail } from './string/is-email';
 export { isPhone } from './string/is-phone';
 export { isUrl } from './string/is-url';

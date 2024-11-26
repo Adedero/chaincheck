@@ -1,3 +1,4 @@
+import ChaincheckError from '../lib/ChaincheckError';
 import { ValueType } from '../types/types';
 
 export const getValueType = (value: unknown): ValueType => {
@@ -17,13 +18,18 @@ export const getValueType = (value: unknown): ValueType => {
   return 'unknown';
 };
 
-export const handleTypeMismatch = (
-  value: any,
-  data: { rule: string; expected: ValueType[]; received: ValueType },
-  message?: string,
-) => {
-  if (!data.expected.includes(data.received)) {
-    return { value, isValid: false, ...data, message };
+export const handleTypeMismatch = (data: { rule: string; expected: ValueType[]; received: ValueType }) => {
+  if (!data.expected.includes('any') && !data.expected.includes(data.received)) {
+    const message = (data.expected.length > 1)
+    ? `Value must be one of ${data.expected.join(', ')}`
+    : `Value must be ${data.expected[0]}`;
+
+    const error = new ChaincheckError(message, data, 'TypeMismatchError');
+    return error;
   }
   return null;
+};
+
+export const handleInvalidParameter = (param: any) => {
+
 };

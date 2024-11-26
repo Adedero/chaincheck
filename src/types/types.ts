@@ -8,6 +8,7 @@ export interface ValidationOptions {
 }
 
 export type ValueType =
+  'any'
   | 'array'
   | 'boolean'
   | 'date'
