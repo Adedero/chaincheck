@@ -8,7 +8,7 @@ export function* isString <T>(
 
   const data = {
     rule: "isString",
-    expected: ['array', 'boolean', 'date', 'function', 'null', 'number', 'object', 'string', 'undefined', 'unknown'] as ValueType[],
+    expected: ['any'] as ValueType[],
     received: type
   };
 

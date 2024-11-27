@@ -1,3 +1,4 @@
+import ChaincheckError from '../lib/ChaincheckError';
 import { ValueType } from '../types/types';
 
 export const getValueType = (value: unknown): ValueType => {
@@ -15,4 +16,8 @@ export const getValueType = (value: unknown): ValueType => {
   )
     return 'object';
   return 'unknown';
+};
+
+export const handleInvalidParameter = (param: any) => {
+
 };
