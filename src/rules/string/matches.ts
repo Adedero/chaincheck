@@ -1,22 +1,31 @@
-import { regex } from "../../config/constants";
+import ChaincheckError from "../../lib/ChaincheckError";
 import { ValidationOptions, ValidationRuleData, ValidationRuleResult, ValueType } from "../../types/types";
 
-export function* isAlphaNum <T>(
+export function* matches <T>(
   value: any,
   type: ValueType,
+  input: string,
   options: ValidationOptions
 ) : Generator<ValidationRuleData, ValidationRuleResult<T>, unknown> {
 
   const data = {
-    rule: "isAlphaNum",
+    rule: "matches",
     expected: ["string"] as ValueType[],
     received: type
   };
 
   yield data;
 
-  let message = options?.message ?? 'Value must contain only alpha-numeric characters';
-  const isValid: boolean = regex.ALPHA_NUMERIC_REGEX.test(value);
+  if (!input || typeof input !== 'string') {
+    throw new ChaincheckError(
+      'Input parameter is missing or invalid. Input should be a string',
+      'InvalidParemeterError',
+      data,
+    );
+  }
+
+  let message = options?.message ?? `Value must match the string: "${input}"`;
+  const isValid: boolean = value === input;
   const defaultMessage: string = isValid ? '' : message;
 
   return {

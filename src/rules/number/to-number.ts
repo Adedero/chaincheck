@@ -1,14 +1,14 @@
 import ChaincheckError from "../../lib/ChaincheckError";
-import { toNumberOptions } from "../../types/options";
+import { ToNumberOptions } from "../../types/options";
 import { ValidationRuleData, ValidationRuleResult, ValueType } from "../../types/types";
 
 export function* toNumber<T>(
   value: any,
   type: ValueType,
-  options?: toNumberOptions
+  options?: ToNumberOptions
 ): Generator<ValidationRuleData, ValidationRuleResult<T>, unknown> {
   
-  const forced = options?.forced ?? true;
+  const forced = options?.forced ?? false;
 
   const data: ValidationRuleData = {
     rule: "toNumber",

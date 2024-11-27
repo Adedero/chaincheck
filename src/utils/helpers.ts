@@ -21,3 +21,15 @@ export const getValueType = (value: unknown): ValueType => {
 export const handleInvalidParameter = (param: any) => {
 
 };
+
+
+export function deepContains(value: any, search: any, key?: "keys" | "values"): boolean {
+  key = key ?? "keys"
+  if (Array.isArray(value)) {
+    return value.some((item) => deepContains(item, search));
+  }
+  if (value && typeof value === "object") {
+    return Object[key](value).some((item) => deepContains(item, search, key));
+  }
+  return value === search;
+}

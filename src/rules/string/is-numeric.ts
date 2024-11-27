@@ -1,30 +1,28 @@
 import { regex } from "../../config/constants";
-import { ValidationOptions, ValidationRuleResult, ValueType } from "../../types/types";
-import { handleTypeMismatch } from "../../utils/helpers";
+import { ValidationOptions, ValidationRuleData, ValidationRuleResult, ValueType } from "../../types/types";
 
-export const isNumeric = <T>(
+export function* isNumeric <T>(
   value: any,
   type: ValueType,
-  options?: ValidationOptions
-) : ValidationRuleResult<T> => {
+  options: ValidationOptions
+) : Generator<ValidationRuleData, ValidationRuleResult<T>, unknown> {
+
   const data = {
     rule: "isNumeric",
     expected: ["string"] as ValueType[],
     received: type
-  }
+  };
 
-  const error = handleTypeMismatch(data);
-  if (error) throw error;
+  yield data;
 
-  const message = options?.message ?? 'Value must contain only numeric characters';
-
-
-  const isValid = regex.NUMERIC_REGEX.test(value as string);
+  let message = options?.message ?? 'Value must contain only numeric characters';
+  const isValid: boolean = regex.NUMERIC_REGEX.test(value);
+  const defaultMessage: string = isValid ? '' : message;
 
   return {
     value,
     isValid,
     ...data,
-    message: isValid ? '' : message
+    message: defaultMessage
   }
-};
+}

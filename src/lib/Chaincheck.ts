@@ -7,7 +7,7 @@ import {
 import { validate } from './validate';
 import { getValueType } from '../utils/helpers';
 import * as validations from '../rules/index';
-import { toNumberOptions } from '../types/options';
+import { ContainsOptions, IsUUIDOptions, ToNumberOptions } from '../types/options';
 
 export class Chaincheck<T> {
   private value: any;
@@ -42,6 +42,9 @@ export class Chaincheck<T> {
   }
 
   //Common rules
+  contains(input: any, options?: ContainsOptions): this {
+    return this.addRule(validations.contains, input, options);
+  }
   isEmpty(options?: ValidationOptions): this {
     return this.addRule(validations.isEmpty, options);
   }
@@ -59,12 +62,36 @@ export class Chaincheck<T> {
   }
 
   //String rules
+  isAlpha(options?: ValidationOptions): this {
+    return this.addRule(validations.isAlpha, options);
+  }
+  isAlphaNum(options?: ValidationOptions): this {
+    return this.addRule(validations.isAlphaNum, options);
+  }
+  isEmail(options?: ValidationOptions): this {
+    return this.addRule(validations.isEmail, options);
+  }
+  isNumeric(options?: ValidationOptions): this {
+    return this.addRule(validations.isNumeric, options);
+  }
   isString(options?: ValidationOptions): this {
     return this.addRule(validations.isString, options);
   }
+  isUUID(options?: IsUUIDOptions): this {
+    return this.addRule(validations.isUUID, options);
+  }
+  matches(input: string, options?: ValidationOptions) : this {
+    return this.addRule(validations.matches, input, options);
+  }
+  matchesRegex(input: RegExp, options?: ValidationOptions) : this {
+    return this.addRule(validations.matchesRegex, input, options);
+  }
+  toString(options?: ValidationOptions): this {
+    return this.addRule(validations.toString, options);
+  }
 
   //Number rules
-  toNumber(options?: toNumberOptions) : this {
+  toNumber(options?: ToNumberOptions) : this {
     return this.addRule(validations.toNumber, options);
   }
 }
