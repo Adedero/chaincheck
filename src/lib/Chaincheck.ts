@@ -7,7 +7,7 @@ import {
 import { validate } from './validate';
 import { getValueType } from '../utils/helpers';
 import * as validations from '../rules/index';
-import { ContainsOptions, IsUUIDOptions, ToNumberOptions } from '../types/options';
+import { ContainsOptions, IsUUIDOptions, StartsAndEndsWIthOptions, ToNumberOptions } from '../types/options';
 
 export class Chaincheck<T> {
   private value: any;
@@ -59,6 +59,12 @@ export class Chaincheck<T> {
   }
   minLength(input: number, options?: ValidationOptions): this {
     return this.addRule(validations.minLength, input, options);
+  }
+  startsWith(input: string | number, options?: StartsAndEndsWIthOptions): this {
+    return this.addRule(validations.startsWith, input, options);
+  }
+  endsWith(input: string | number, options?: StartsAndEndsWIthOptions): this {
+    return this.addRule(validations.endsWith, input, options);
   }
 
   //String rules

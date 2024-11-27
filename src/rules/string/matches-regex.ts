@@ -19,7 +19,7 @@ export function* matchesRegex <T>(
   if (!input || Object.prototype.toString.call(value) !== '[object RegExp]') {
     throw new ChaincheckError(
       'Input parameter is missing or invalid. Input should be a regular expression',
-      'InvalidParemeterError',
+      'InvalidParameterError',
       data,
     );
   }

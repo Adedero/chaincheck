@@ -20,7 +20,7 @@ export function* contains<T>(
   yield data;
 
   let isValid = false;
-  let message = options?.message ?? "Value must contain the specified element.";
+  let message = options?.message ?? `Value must contain "${input}"`;
 
   const deep = options?.deep ?? false;
 
@@ -29,7 +29,7 @@ export function* contains<T>(
   if (!check || (check !== "keys" && check !== "values")) {
     throw new ChaincheckError(
       "Invalid 'check' option. It must be 'keys' or 'values'.",
-      "InvalidParemeterError",
+      "InvalidParameterError",
       data
     )
   }
@@ -53,8 +53,7 @@ export function* contains<T>(
     value,
     isValid,
     ...data,
-    message: isValid ? "" : message,
-    transformation: "contains",
+    message: isValid ? "" : message
   };
 }
 

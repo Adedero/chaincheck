@@ -1,10 +1,12 @@
 //Common
 export { contains } from './common/contains';
+export { endsWith } from './common/ends-with';
 export { hasLength } from './common/has-length';
 export { isEmpty } from './common/is-empty';
 export { isNotEmpty } from './common/is-not-empty';
 export { maxLength } from './common/max-length';
 export { minLength } from './common/min-length';
+export { startsWith } from './common/starts-with';
 
 //String
 export { isAlpha } from './string/is-alpha';
@@ -16,12 +18,7 @@ export { isUUID } from './string/is-uuid';
 export { matches } from './string/matches';
 export { matchesRegex } from './string/matches-regex';
 export { toString } from './string/to-string';
-/* 
-export { isPhone } from './string/is-phone';
-export { isUrl } from './string/is-url';
-export { isAlphanumeric } from './string/is-alphanumeric';
-export { isAlphaNumeric } from './string/is-alpha-numeric';
- */
+
 
 //Number
 export { toNumber } from './number/to-number';

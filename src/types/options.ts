@@ -12,3 +12,7 @@ export interface ContainsOptions extends ValidationOptions {
   check?: "keys" | "values";
   deep?: boolean;
 }
+
+export interface StartsAndEndsWIthOptions extends ValidationOptions {
+  forced?: boolean;
+}

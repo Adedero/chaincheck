@@ -64,6 +64,6 @@ export interface ValidationRuleData {
 export type ChaincheckErrorType =
   | 'ValidationError'
   | 'TypeMismatchError'
-  | 'InvalidParemeterError'
+  | 'InvalidParameterError'
   | 'MissingValidationOptionsError'
   | 'TransformationError'

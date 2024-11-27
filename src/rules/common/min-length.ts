@@ -24,7 +24,7 @@ export function* minLength <T>(
   if (!input || typeof input !== 'number') {
     throw new ChaincheckError(
       'Input parameter is missing or invalid. Input should be a number',
-      'InvalidParemeterError',
+      'InvalidParameterError',
       data,
     );
   }

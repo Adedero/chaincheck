@@ -33,3 +33,11 @@ export function deepContains(value: any, search: any, key?: "keys" | "values"): 
   }
   return value === search;
 }
+
+export function deepStartsWith(value: any, search: any) : boolean {
+  if (Array.isArray(value)) {
+    if (Array.isArray(value[0])) return deepStartsWith(value, search)
+    return value[0] === search;
+  }
+  return false;
+}

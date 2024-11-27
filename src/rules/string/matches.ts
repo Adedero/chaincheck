@@ -19,7 +19,7 @@ export function* matches <T>(
   if (!input || typeof input !== 'string') {
     throw new ChaincheckError(
       'Input parameter is missing or invalid. Input should be a string',
-      'InvalidParemeterError',
+      'InvalidParameterError',
       data,
     );
   }
