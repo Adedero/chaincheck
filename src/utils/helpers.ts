@@ -16,14 +16,3 @@ export const getValueType = (value: unknown): ValueType => {
     return 'object';
   return 'unknown';
 };
-
-export const handleTypeMismatch = (
-  value: any,
-  data: { rule: string; expected: ValueType[]; received: ValueType },
-  message?: string,
-) => {
-  if (!data.expected.includes(data.received)) {
-    return { value, isValid: false, ...data, message };
-  }
-  return null;
-};

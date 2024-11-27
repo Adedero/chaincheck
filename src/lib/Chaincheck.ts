@@ -7,6 +7,7 @@ import {
 import { validate } from './validate';
 import { getValueType } from '../utils/helpers';
 import * as validations from '../rules/index';
+import { toNumberOptions } from '../types/options';
 
 export class Chaincheck<T> {
   private value: any;
@@ -44,26 +45,26 @@ export class Chaincheck<T> {
   isEmpty(options?: ValidationOptions): this {
     return this.addRule(validations.isEmpty, options);
   }
-
   isNotEmpty(options?: ValidationOptions): this {
     return this.addRule(validations.isNotEmpty, options);
   }
-
   hasLength(input: number, options?: ValidationOptions): this {
     return this.addRule(validations.hasLength, input, options);
   }
-
+  maxLength(input: number, options?: ValidationOptions): this {
+    return this.addRule(validations.maxLength, input, options);
+  }
   minLength(input: number, options?: ValidationOptions): this {
     return this.addRule(validations.minLength, input, options);
   }
 
-  maxLength(input: number, options?: ValidationOptions): this {
-    return this.addRule(validations.maxLength, input, options);
-  }
-
-
   //String rules
   isString(options?: ValidationOptions): this {
     return this.addRule(validations.isString, options);
+  }
+
+  //Number rules
+  toNumber(options?: toNumberOptions) : this {
+    return this.addRule(validations.toNumber, options);
   }
 }

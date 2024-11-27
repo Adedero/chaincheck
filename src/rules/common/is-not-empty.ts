@@ -1,34 +1,28 @@
-import {
-  ValidationOptions,
-  ValidationRuleResult,
-  ValueType,
-} from '../../types/types';
-import { handleTypeMismatch } from '../../utils/helpers';
+import { ValidationOptions, ValidationRuleData, ValidationRuleResult, ValueType } from "../../types/types";
 
-export const isNotEmpty = <T>(
+export function* isNotEmpty <T>(
   value: any,
   type: ValueType,
-  options?: ValidationOptions,
-): ValidationRuleResult<T> => {
+  options?: ValidationOptions
+) : Generator<ValidationRuleData, ValidationRuleResult<T>, unknown> {
+  
   const data = {
-    rule: 'isNotEmpty',
-    expected: ['string', 'array', 'object'] as ValueType[],
-    received: type,
-  };
+    rule: "isNotEmpty",
+    expected: ["string", "array", "object"] as ValueType[],
+    received: type
+  }
+  yield data;
 
   let message = options?.message;
 
-  const error = handleTypeMismatch(value, data, message);
-  if (error) return error;
-
   const isValid =
-    (type === 'string' && (value as string).trim().length > 0) ||
-    (type === 'array' && Array.isArray(value) && value.length > 0) ||
+    (type === 'string' && (value as string).trim().length === 0) ||
+    (type === 'array' && Array.isArray(value) && value.length === 0) ||
     (type === 'object' &&
       value !== null &&
-      Object.keys(value as object).length > 0);
+      Object.keys(value as object).length === 0);
 
-  message = message ?? 'Value must not be empty';
+  message = message ?? 'Value must be empty';
 
   return {
     value,
@@ -36,4 +30,5 @@ export const isNotEmpty = <T>(
     ...data,
     message: isValid ? '' : message,
   };
+
 };

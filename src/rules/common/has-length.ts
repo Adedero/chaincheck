@@ -1,35 +1,35 @@
 import ChaincheckError from '../../lib/ChaincheckError';
 import {
   ValidationOptions,
+  ValidationRuleData,
   ValidationRuleResult,
   ValueType,
 } from '../../types/types';
-import { handleTypeMismatch } from '../../utils/helpers';
 
-export const hasLength = <T>(
+export function* hasLength <T>(
   value: any,
   type: ValueType,
   input: number,
   options?: ValidationOptions,
-): ValidationRuleResult<T> => {
+): Generator<ValidationRuleData, ValidationRuleResult<T>, unknown> {
+
   const data = {
     rule: 'hasLength',
     expected: ['string', 'array', 'number', 'object'] as ValueType[],
     received: type,
   };
 
+  yield data;
+
   if (!input || typeof input !== 'number') {
     throw new ChaincheckError(
       'Input parameter is missing or invalid. Input should be a number',
-      data,
       'InvalidParemeterError',
+      data,
     );
   }
 
-  let message = options?.message;
-
-  const error = handleTypeMismatch(value, data, message);
-  if (error) return error;
+  let message = options?.message ??  `Value must have length equal to ${input}`;
 
   let length: number | null = null;
 
@@ -43,16 +43,16 @@ export const hasLength = <T>(
     length = value.toString().length;
   }
 
-  if (length === null)
-    return {
-      value,
-      isValid: false,
-      ...data,
-      message: message ?? 'Value must be a string, number, array, or object',
-    };
+  if (length === null) {
+    throw new ChaincheckError(
+      `Invalid type for rule: ${data.rule}. Expected one of "${data.expected.join(', ')}" but got "${data.received}" instead.`,
+      "TypeMismatchError",
+      data,
+    );
+  }
 
   const isValid = length === input;
-  const defaultMessage = isValid ? '' : message ?? `Value must have length equal to ${input}`
+  const defaultMessage = isValid ? '' : message
 
   return {
     value,

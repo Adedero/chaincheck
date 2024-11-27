@@ -28,7 +28,22 @@ export const validate = <T>(
     let result: ValidationRuleResult<T> | null = null;
 
     try {
-      result = rule(finalValue, currentType);
+      const gen = rule(finalValue, currentType);
+      const data = gen.next().value;
+
+      if (!data.expected.includes("any") && !data.expected.includes(currentType)) {
+        throw new ChaincheckError(
+          `Invalid type for rule: ${data.rule}. Expected one of "${data.expected.join(', ')}" but received "${currentType}" instead.`,
+          "TypeMismatchError",
+          {
+            rule: data.rule,
+            expected: data.expected,
+            received: currentType,
+          }
+        );
+      }
+      
+      result = gen.next().value as ValidationRuleResult<T>;
 
       if (result.isValid) {
         finalValue = result.value;
@@ -46,18 +61,8 @@ export const validate = <T>(
           rule: result.rule,
           expected: result.expected,
           received: result.received,
-          message: '',
+          message:  result.message ?? `Validation failed for rule: ${result.rule}`,
         };
-
-        if (!result.expected.includes(result.received)) {
-          error.message =
-            (result.message ?? result.expected.length > 1)
-              ? `Value must be one of ${result.expected.join(', ')}`
-              : `Value must be ${result.expected[0]}`;
-        } else {
-          error.message =
-            result.message ?? `Validation failed for rule: ${result.rule}`;
-        }
 
         errors.push(error);
 
@@ -82,16 +87,16 @@ export const validate = <T>(
       }
       const error = err as ChaincheckError;
       errors.push({
-        rule: error.rule,
-        expected: error.expected ?? ['unknown'],
-        received: error.received ?? 'unknown',
+        rule: error.info?.rule ?? 'unknown',
+        expected: error.info?.expected ?? ['unknown'],
+        received: error.info?.received ?? 'unknown',
         message: `Error: ${error.message ?? 'Validation failed'}`,
       });
     }
   }
 
   return {
-    value: value as T,
+    value: finalValue as T,
     originalValue: originalValue,
     isValid: errors.length === 0,
     errors,

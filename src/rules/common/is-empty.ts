@@ -1,25 +1,19 @@
-import {
-  ValidationOptions,
-  ValidationRuleResult,
-  ValueType,
-} from '../../types/types';
-import { handleTypeMismatch } from '../../utils/helpers';
+import { ValidationOptions, ValidationRuleData, ValidationRuleResult, ValueType } from "../../types/types";
 
-export const isEmpty = <T>(
+export function* isEmpty <T>(
   value: any,
   type: ValueType,
-  options?: ValidationOptions,
-): ValidationRuleResult<T> => {
+  options?: ValidationOptions
+) : Generator<ValidationRuleData, ValidationRuleResult<T>, unknown> {
+  
   const data = {
-    rule: 'isEmpty',
-    expected: ['string', 'array', 'object'] as ValueType[],
-    received: type,
-  };
+    rule: "isEmpty",
+    expected: ["string", "array", "object"] as ValueType[],
+    received: type
+  }
+  yield data;
 
   let message = options?.message;
-
-  const error = handleTypeMismatch(value, data, message);
-  if (error) return error;
 
   const isValid =
     (type === 'string' && (value as string).trim().length === 0) ||
@@ -36,4 +30,5 @@ export const isEmpty = <T>(
     ...data,
     message: isValid ? '' : message,
   };
+
 };

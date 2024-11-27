@@ -1,5 +1,5 @@
 import { Chaincheck } from '../dist/index.js';
 
-const result = new Chaincheck('suraya').minLength(9).validate();
+const result = new Chaincheck('ssur').toNumber().maxLength(2).validate();
 
 console.log(result);

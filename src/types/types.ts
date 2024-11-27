@@ -8,6 +8,7 @@ export interface ValidationOptions {
 }
 
 export type ValueType =
+  'any'
   | 'array'
   | 'boolean'
   | 'date'
@@ -42,7 +43,7 @@ export interface ValidationError {
 export type ValidationRule<T> = (
   value: any,
   type: ValueType,
-) => ValidationRuleResult<T>;
+) => Generator<ValidationRuleData, ValidationRuleResult<T>, unknown>;
 
 export interface ValidationRuleResult<T> {
   value: T;
@@ -54,8 +55,15 @@ export interface ValidationRuleResult<T> {
   transformation?: string;
 }
 
+export interface ValidationRuleData {
+  rule: string;
+  expected: ValueType[];
+  received: ValueType;
+}
+
 export type ChaincheckErrorType =
   | 'ValidationError'
   | 'TypeMismatchError'
   | 'InvalidParemeterError'
-  | 'MissingValidationOptionsError';
+  | 'MissingValidationOptionsError'
+  | 'TransformationError'
